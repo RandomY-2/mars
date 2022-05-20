@@ -135,7 +135,7 @@ def erf(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.erfc)
 def erfc(x, out=None, where=None, **kwargs):
     """
-    Returns the complementary error function
+    Returns the complementary error function of x
 
     It is defined as ``1 - erf(x)``.
 
@@ -175,7 +175,7 @@ def erfc(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.erfcx)
 def erfcx(x, out=None, where=None, **kwargs):
     """
-    Scales complementary error function
+    Returns the scaled complementary error function of x
 
     It is defined as ``exp(x**2) * erfc(x)``.
 
@@ -215,7 +215,7 @@ def erfcx(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.erfi)
 def erfi(x, out=None, where=None, **kwargs):
     """
-    Imaginary error function
+    Returns the imaginary error function of x
 
     It is defined as ``-i erf(i, x)``.
 
@@ -255,7 +255,7 @@ def erfi(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.erfinv)
 def erfinv(x, out=None, where=None, **kwargs):
     """
-    Inverse of the error function
+    Returns the inverse of the error function of x
 
     It is defined as ``-i erf(i, x)``.
 
@@ -288,7 +288,7 @@ def erfinv(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.erfcinv)
 def erfcinv(x, out=None, where=None, **kwargs):
     """
-    Inverse of the complementary error function
+    Returns the inverse of the complementary error function of x
 
     Parameters
     ----------
@@ -319,7 +319,7 @@ def erfcinv(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.wofz)
 def wofz(x, out=None, where=None, **kwargs):
     """
-    Returns the value of the Faddeeva function.
+    Returns the value of the Faddeeva function of x.
 
     It is defined as ``exp(-x**2) * erfc(-i*x)``.
 
