@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from functools import partialmethod
+from functools import partial, partialmethod
 
 from ...utils import ceildiv
 from .core import (
@@ -732,6 +732,13 @@ class SparseArray(SparseNDArray):
 
     erf = partialmethod(_scipy_unary, "erf")
     erfc = partialmethod(_scipy_unary, "erfc")
+    erfcx = partialmethod(_scipy_unary, "erfcx")
+    erfi = partialmethod(_scipy_unary, "erfi")
+    erfinv = partialmethod(_scipy_unary, "erfinv")
+    erfcinv = partialmethod(_scipy_unary, "erfcinv")
+    wofz = partialmethod(_scipy_unary, "wofz")
+    dawsn = partialmethod(_scipy_unary, "dawsn")
+    fresnel = partialmethod(_scipy_unary, "fresnel")
     entr = partialmethod(_scipy_unary, "entr")
 
     rel_entr = partialmethod(_scipy_binary, "rel_entr")

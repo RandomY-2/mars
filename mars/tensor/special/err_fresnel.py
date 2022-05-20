@@ -49,6 +49,36 @@ class TensorErfinv(TensorSpecialUnaryOp):
     _func_name = "erfinv"
 
 
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorErfcinv(TensorSpecialUnaryOp):
+    _func_name = "erfcinv"
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorWofz(TensorSpecialUnaryOp):
+    _func_name = "wofz"
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorDawsn(TensorSpecialUnaryOp):
+    _func_name = "dawsn"
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorFresnel(TensorSpecialUnaryOp):
+    _func_name = "fresnel"
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorFresnelZeros(TensorSpecialUnaryOp):
+    _func_name = "fresnel_zeros"
+
+
 @implement_scipy(spspecial.erf)
 @infer_dtype(spspecial.erf)
 def erf(x, out=None, where=None, **kwargs):
@@ -134,12 +164,8 @@ def erfc(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
-    >>> import matplotlib.pyplot as plt
     >>> x = mt.linspace(-3, 3)
-    >>> plt.plot(x, special.erfc(x))
-    >>> plt.xlabel('$x$')
-    >>> plt.ylabel('$erfc(x)$')
-    >>> plt.show()
+    >>> special.erfc(x).execute()
     """
     op = TensorErfc(**kwargs)
     return op(x, out=out, where=where)
@@ -178,12 +204,8 @@ def erfcx(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
-    >>> import matplotlib.pyplot as plt
     >>> x = mt.linspace(-3, 3)
-    >>> plt.plot(x, special.erfcx(x))
-    >>> plt.xlabel('$x$')
-    >>> plt.ylabel('$erfcx(x)$')
-    >>> plt.show()
+    >>> special.erfcx(x).execute()
     """
     op = TensorErfcx(**kwargs)
     return op(x, out=out, where=where)
@@ -222,12 +244,8 @@ def erfi(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
-    >>> import matplotlib.pyplot as plt
     >>> x = mt.linspace(-3, 3)
-    >>> plt.plot(x, special.erfi(x))
-    >>> plt.xlabel('$x$')
-    >>> plt.ylabel('$erfi(x)$')
-    >>> plt.show()
+    >>> special.erfi(x).execute()
     """
     op = TensorErfi(**kwargs)
     return op(x, out=out, where=where)
@@ -259,9 +277,156 @@ def erfinv(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
-    >>> special.erfinv(0.5)
-    >>> x = mt.linspace(-1.0, 1.0, num=10)
-    >>> special.erfinv(x)
+    >>> x = mt.linspace(-3, 3)
+    >>> special.erfinv(x).execute()
     """
     op = TensorErfinv(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.erfcinv)
+@infer_dtype(spspecial.erfcinv)
+def erfcinv(x, out=None, where=None, **kwargs):
+    """
+    Inverse of the complementary error function
+
+    Parameters
+    ----------
+    x : Tensor
+        Argument at which to evaluate. Domain: [0, 2].
+
+    Returns
+    -------
+    res : Tensor
+        The inverse of erfc of x, element-wise.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> x = mt.linspace(-3, 3)
+    >>> special.erfcinv(x).execute()
+    """
+    op = TensorErfcinv(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.wofz)
+@infer_dtype(spspecial.wofz)
+def wofz(x, out=None, where=None, **kwargs):
+    """
+    Returns the value of the Faddeeva function.
+
+    It is defined as ``exp(-x**2) * erfc(-i*x)``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Input tensor, real or complex valued arguments.
+
+    Returns
+    -------
+    res : Tensor
+        Value of the Faddeeva function.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    References
+    ----------
+    .. [1] Steven G. Johnson, Faddeeva W function implementation. http://ab-initio.mit.edu/Faddeeva
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> x = mt.linspace(-3, 3)
+    >>> special.wofz(x).execute()
+    """
+    op = TensorWofz(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.dawsn)
+@infer_dtype(spspecial.dawsn)
+def dawsn(x, out=None, where=None, **kwargs):
+    """
+    Returns the value of the Dawson's integral for the tensor.
+
+    It is defined as ``exp(-x**2) * integral(exp(t**2), t=0..x)``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Input tensor, real or complex valued arguments.
+
+    Returns
+    -------
+    res : Tensor
+        Value of the Dawson's integral.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    References
+    ----------
+    .. [1] Steven G. Johnson, Faddeeva W function implementation. http://ab-initio.mit.edu/Faddeeva
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> x = mt.linspace(-3, 3)
+    >>> special.dawsn(x).execute()
+    """
+    op = TensorDawsn(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.fresnel)
+@infer_dtype(spspecial.fresnel)
+def fresnel(x, out=None, where=None, **kwargs):
+    """
+    Returns the value of the Fresnel integrals for the tensor.
+
+    It is defined as ``
+        S(x) = integral(sin(pi * t**2 / 2), t=0..x),
+        C(x) = integral(cos(pi * t**2 / 2), t=0..x),
+    ``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Input tensor, real or complex valued arguments.
+
+    out : 2-tuple of Tensor, optional
+        Optional output tensor for the integral results.
+
+    Returns
+    -------
+    res : 2-tuple of Tensor or scalars
+        Value of the Fresnel integrals.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    References
+    ----------
+    .. [1] NIST Digital Library of Mathematical Functions https://dlmf.nist.gov/7.2#iii
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> x = mt.linspace(-3, 3)
+    >>> special.fresnel(x).execute()
+    """
+    op = TensorFresnel(**kwargs)
     return op(x, out=out, where=where)

@@ -25,7 +25,15 @@ try:
         erfi,
         TensorErfi,
         erfinv,
-        TensorErfinv
+        TensorErfinv,
+        erfcinv,
+        TensorErfcinv,
+        wofz,
+        TensorWofz,
+        dawsn,
+        TensorDawsn,
+        fresnel,
+        TensorFresnel,
     )
     from .gamma_funcs import (
         gamma,
