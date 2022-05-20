@@ -17,12 +17,26 @@ from scipy.special import (
     gammaln as scipy_gammaln,
     erf as scipy_erf,
     erfc as scipy_erfc,
+    erfcx as scipy_erfcx,
+    erfi as scipy_erfi,
+    erfinv as scipy_erfinv,
     betainc as scipy_betainc,
 )
 
 from ....core import tile
 from ... import tensor
-from ..err_fresnel import erf, erfc, TensorErf, TensorErfc
+from ..err_fresnel import (
+    erf,
+    TensorErf,
+    erfc,
+    TensorErfc,
+    erfcx,
+    TensorErfcx,
+    erfi,
+    TensorErfi,
+    erfinv,
+    TensorErfinv,
+)
 from ..gamma_funcs import (
     gammaln,
     TensorGammaln,
@@ -68,11 +82,81 @@ def test_elf():
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape
 
+
+def test_erfc():
+    raw = np.random.rand(10, 8, 5)
+    t = tensor(raw, chunk_size=3)
+
     r = erfc(t)
     expect = scipy_erfc(raw)
 
     assert r.shape == raw.shape
     assert r.dtype == expect.dtype
+
+    t, r = tile(t, r)
+
+    assert r.nsplits == t.nsplits
+    for c in r.chunks:
+        assert isinstance(c.op, TensorErfc)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+
+def test_erfc():
+    raw = np.random.rand(10, 8, 5)
+    t = tensor(raw, chunk_size=3)
+
+    r = erfcx(t)
+    expect = scipy_erfcx(raw)
+
+    assert r.shape == raw.shape
+    assert r.dtype == expect.dtype
+
+    t, r = tile(t, r)
+
+    assert r.nsplits == t.nsplits
+    for c in r.chunks:
+        assert isinstance(c.op, TensorErfcx)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+
+def test_erfi():
+    raw = np.random.rand(10, 8, 5)
+    t = tensor(raw, chunk_size=3)
+
+    r = erfi(t)
+    expect = scipy_erfi(raw)
+
+    assert r.shape == raw.shape
+    assert r.dtype == expect.dtype
+
+    t, r = tile(t, r)
+
+    assert r.nsplits == t.nsplits
+    for c in r.chunks:
+        assert isinstance(c.op, TensorErfi)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+
+def test_erfinv():
+    raw = np.random.rand(10, 8, 5)
+    t = tensor(raw, chunk_size=3)
+
+    r = erfinv(t)
+    expect = scipy_erfinv(raw)
+
+    assert r.shape == raw.shape
+    assert r.dtype == expect.dtype
+
+    t, r = tile(t, r)
+
+    assert r.nsplits == t.nsplits
+    for c in r.chunks:
+        assert isinstance(c.op, TensorErfinv)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
 
 
 def test_beta_inc():

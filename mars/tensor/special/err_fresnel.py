@@ -31,6 +31,24 @@ class TensorErfc(TensorSpecialUnaryOp):
     _func_name = "erfc"
 
 
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorErfcx(TensorSpecialUnaryOp):
+    _func_name = "erfcx"
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorErfi(TensorSpecialUnaryOp):
+    _func_name = "erfi"
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorErfinv(TensorSpecialUnaryOp):
+    _func_name = "erfinv"
+
+
 @implement_scipy(spspecial.erf)
 @infer_dtype(spspecial.erf)
 def erf(x, out=None, where=None, **kwargs):
@@ -82,8 +100,168 @@ def erf(x, out=None, where=None, **kwargs):
     op = TensorErf(**kwargs)
     return op(x, out=out, where=where)
 
+
 @implement_scipy(spspecial.erfc)
 @infer_dtype(spspecial.erfc)
 def erfc(x, out=None, where=None, **kwargs):
+    """
+    Returns the complementary error function
+
+    It is defined as ``1 - erf(x)``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Input tensor.
+
+    out: Tensor or None
+        Optional output tensor for the function results.
+
+    Returns
+    -------
+    res : Scalar or Tensor
+        Values of the complementary error function.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    References
+    ----------
+    .. [1] Steven G. Johnson, Faddeeva W function implementation. http://ab-initio.mit.edu/Faddeeva
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> import matplotlib.pyplot as plt
+    >>> x = mt.linspace(-3, 3)
+    >>> plt.plot(x, special.erfc(x))
+    >>> plt.xlabel('$x$')
+    >>> plt.ylabel('$erfc(x)$')
+    >>> plt.show()
+    """
     op = TensorErfc(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.erfcx)
+@infer_dtype(spspecial.erfcx)
+def erfcx(x, out=None, where=None, **kwargs):
+    """
+    Scales complementary error function
+
+    It is defined as ``exp(x**2) * erfc(x)``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Input tensor.
+
+    out: Tensor or None
+        Optional output tensor for the function results.
+
+    Returns
+    -------
+    res : Scalar or Tensor
+        Values of the scaled complementary error function.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    References
+    ----------
+    .. [1] Steven G. Johnson, Faddeeva W function implementation. http://ab-initio.mit.edu/Faddeeva
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> import matplotlib.pyplot as plt
+    >>> x = mt.linspace(-3, 3)
+    >>> plt.plot(x, special.erfcx(x))
+    >>> plt.xlabel('$x$')
+    >>> plt.ylabel('$erfcx(x)$')
+    >>> plt.show()
+    """
+    op = TensorErfcx(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.erfi)
+@infer_dtype(spspecial.erfi)
+def erfi(x, out=None, where=None, **kwargs):
+    """
+    Imaginary error function
+
+    It is defined as ``-i erf(i, x)``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Input tensor, real or complex valued argument.
+
+    out: Tensor or None
+        Optional output tensor for the function results.
+
+    Returns
+    -------
+    res : Scalar or Tensor
+        Values of the imaginary error function.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    References
+    ----------
+    .. [1] Steven G. Johnson, Faddeeva W function implementation. http://ab-initio.mit.edu/Faddeeva
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> import matplotlib.pyplot as plt
+    >>> x = mt.linspace(-3, 3)
+    >>> plt.plot(x, special.erfi(x))
+    >>> plt.xlabel('$x$')
+    >>> plt.ylabel('$erfi(x)$')
+    >>> plt.show()
+    """
+    op = TensorErfi(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.erfinv)
+@infer_dtype(spspecial.erfinv)
+def erfinv(x, out=None, where=None, **kwargs):
+    """
+    Inverse of the error function
+
+    It is defined as ``-i erf(i, x)``.
+
+    Parameters
+    ----------
+    x : Tensor
+        Argument at which to evaluate. Domain: [-1, 1].
+
+    Returns
+    -------
+    res : Tensor
+        The inverse of erf of x, element-wise.
+
+    See Also
+    --------
+    erfc, erfinv, erfcinv, wofz, erfcx, erfi
+
+    Examples
+    --------
+    >>> import mars.tensor as mt
+    >>> from mars.tensor import special
+    >>> special.erfinv(0.5)
+    >>> x = mt.linspace(-1.0, 1.0, num=10)
+    >>> special.erfinv(x)
+    """
+    op = TensorErfinv(**kwargs)
     return op(x, out=out, where=where)

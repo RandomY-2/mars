@@ -33,6 +33,9 @@ from ... import special as mt_special
         "digamma",
         "erf",
         "erfc",
+        "erfcx",
+        "erfi",
+        "erfinv",
         "entr",
     ],
 )
