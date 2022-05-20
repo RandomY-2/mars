@@ -102,7 +102,7 @@ def test_erfc():
         assert c.shape == c.inputs[0].shape
 
 
-def test_erfc():
+def test_erfcx():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
