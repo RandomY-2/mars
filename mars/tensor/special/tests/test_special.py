@@ -16,12 +16,13 @@ import numpy as np
 from scipy.special import (
     gammaln as scipy_gammaln,
     erf as scipy_erf,
+    erfc as scipy_erfc,
     betainc as scipy_betainc,
 )
 
 from ....core import tile
 from ... import tensor
-from ..err_fresnel import erf, TensorErf
+from ..err_fresnel import erf, erfc, TensorErf, TensorErfc
 from ..gamma_funcs import (
     gammaln,
     TensorGammaln,
@@ -66,6 +67,12 @@ def test_elf():
         assert isinstance(c.op, TensorErf)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape
+
+    r = erfc(t)
+    expect = scipy_erfc(raw)
+
+    assert r.shape == raw.shape
+    assert r.dtype == expect.dtype
 
 
 def test_beta_inc():

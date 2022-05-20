@@ -265,6 +265,7 @@ kl_div = partial(_call_bin, "kl_div")
 xlogy = partial(_call_bin, "xlogy")
 
 erf = partial(_call_unary, "erf")
+erfc = partial(_call_unary, "erfc")
 
 jv = partial(_call_bin, "jv")
 jve = partial(_call_bin, "jve")

@@ -32,6 +32,7 @@ from ... import special as mt_special
         "rgamma",
         "digamma",
         "erf",
+        "erfc",
         "entr",
     ],
 )

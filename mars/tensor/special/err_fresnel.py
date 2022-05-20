@@ -25,6 +25,12 @@ class TensorErf(TensorSpecialUnaryOp):
     _func_name = "erf"
 
 
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorErfc(TensorSpecialUnaryOp):
+    _func_name = "erfc"
+
+
 @implement_scipy(spspecial.erf)
 @infer_dtype(spspecial.erf)
 def erf(x, out=None, where=None, **kwargs):
@@ -74,4 +80,10 @@ def erf(x, out=None, where=None, **kwargs):
     >>> plt.show()
     """
     op = TensorErf(**kwargs)
+    return op(x, out=out, where=where)
+
+@implement_scipy(spspecial.erfc)
+@infer_dtype(spspecial.erfc)
+def erfc(x, out=None, where=None, **kwargs):
+    op = TensorErfc(**kwargs)
     return op(x, out=out, where=where)
