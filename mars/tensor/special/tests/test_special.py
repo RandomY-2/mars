@@ -99,16 +99,41 @@ def test_erfc():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
-    r = erfc(t)
+    r_without_optional = erfc(t)
     expect = scipy_erfc(raw)
 
-    assert r.shape == raw.shape
-    assert r.dtype == expect.dtype
+    assert r_without_optional.shape == raw.shape
+    assert r_without_optional.dtype == expect.dtype
 
-    t, r = tile(t, r)
+    t_without_optional, r_without_optional = tile(t, r_without_optional)
 
-    assert r.nsplits == t.nsplits
-    for c in r.chunks:
+    assert r_without_optional.nsplits == t_without_optional.nsplits
+    for c in r_without_optional.chunks:
+        assert isinstance(c.op, TensorErfc)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    out = tensor(raw, chunk_size=3)
+    r_with_optional = erfc(t, out)
+
+    assert out.shape == raw.shape
+    assert out.dtype == expect.dtype
+
+    assert r_with_optional.shape == raw.shape
+    assert r_with_optional.dtype == expect.dtype
+
+    t_optional_out, out = tile(t, out)
+
+    assert out.nsplits == t_optional_out.nsplits
+    for c in out.chunks:
+        assert isinstance(c.op, TensorErfc)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    t_optional_r, r_with_optional = tile(t, r_with_optional)
+
+    assert r_with_optional.nsplits == t_optional_r.nsplits
+    for c in r_with_optional.chunks:
         assert isinstance(c.op, TensorErfc)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape
@@ -118,16 +143,41 @@ def test_erfcx():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
-    r = erfcx(t)
+    r_without_optional = erfcx(t)
     expect = scipy_erfcx(raw)
 
-    assert r.shape == raw.shape
-    assert r.dtype == expect.dtype
+    assert r_without_optional.shape == raw.shape
+    assert r_without_optional.dtype == expect.dtype
 
-    t, r = tile(t, r)
+    t_without_optional, r_without_optional = tile(t, r_without_optional)
 
-    assert r.nsplits == t.nsplits
-    for c in r.chunks:
+    assert r_without_optional.nsplits == t_without_optional.nsplits
+    for c in r_without_optional.chunks:
+        assert isinstance(c.op, TensorErfcx)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    out = tensor(raw, chunk_size=3)
+    r_with_optional = erfcx(t, out)
+
+    assert out.shape == raw.shape
+    assert out.dtype == expect.dtype
+
+    assert r_with_optional.shape == raw.shape
+    assert r_with_optional.dtype == expect.dtype
+
+    t_optional_out, out = tile(t, out)
+
+    assert out.nsplits == t_optional_out.nsplits
+    for c in out.chunks:
+        assert isinstance(c.op, TensorErfcx)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    t_optional_r, r_with_optional = tile(t, r_with_optional)
+
+    assert r_with_optional.nsplits == t_optional_r.nsplits
+    for c in r_with_optional.chunks:
         assert isinstance(c.op, TensorErfcx)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape
@@ -137,16 +187,41 @@ def test_erfi():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
-    r = erfi(t)
+    r_without_optional = erfi(t)
     expect = scipy_erfi(raw)
 
-    assert r.shape == raw.shape
-    assert r.dtype == expect.dtype
+    assert r_without_optional.shape == raw.shape
+    assert r_without_optional.dtype == expect.dtype
 
-    t, r = tile(t, r)
+    t_without_optional, r_without_optional = tile(t, r_without_optional)
 
-    assert r.nsplits == t.nsplits
-    for c in r.chunks:
+    assert r_without_optional.nsplits == t_without_optional.nsplits
+    for c in r_without_optional.chunks:
+        assert isinstance(c.op, TensorErfi)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    out = tensor(raw, chunk_size=3)
+    r_with_optional = erfi(t, out)
+
+    assert out.shape == raw.shape
+    assert out.dtype == expect.dtype
+
+    assert r_with_optional.shape == raw.shape
+    assert r_with_optional.dtype == expect.dtype
+
+    t_optional_out, out = tile(t, out)
+
+    assert out.nsplits == t_optional_out.nsplits
+    for c in out.chunks:
+        assert isinstance(c.op, TensorErfi)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    t_optional_r, r_with_optional = tile(t, r_with_optional)
+
+    assert r_with_optional.nsplits == t_optional_r.nsplits
+    for c in r_with_optional.chunks:
         assert isinstance(c.op, TensorErfi)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape

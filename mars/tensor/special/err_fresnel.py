@@ -164,8 +164,13 @@ def erfc(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
+    >>> # without optional tensor
     >>> x = mt.linspace(-3, 3)
     >>> special.erfc(x).execute()
+    >>> # with optional tensor
+    >>> out = mt.linspace(-3, 3)
+    >>> special.erfcx(x, out).execute()
+    >>> out
     """
     op = TensorErfc(**kwargs)
     return op(x, out=out, where=where)
@@ -204,8 +209,13 @@ def erfcx(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
+    >>> # without optional tensor
     >>> x = mt.linspace(-3, 3)
     >>> special.erfcx(x).execute()
+    >>> # with optional tensor
+    >>> out = mt.linspace(-3, 3)
+    >>> special.erfcx(x, out).execute()
+    >>> out
     """
     op = TensorErfcx(**kwargs)
     return op(x, out=out, where=where)
@@ -244,8 +254,13 @@ def erfi(x, out=None, where=None, **kwargs):
     --------
     >>> import mars.tensor as mt
     >>> from mars.tensor import special
+    >>> # without optional tensor
     >>> x = mt.linspace(-3, 3)
     >>> special.erfi(x).execute()
+    >>> # with optional tensor
+    >>> out = mt.linspace(-3, 3)
+    >>> special.erfi(x, out).execute()
+    >>> out
     """
     op = TensorErfi(**kwargs)
     return op(x, out=out, where=where)
