@@ -90,6 +90,8 @@ def test_erfc():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
+    assert erfc(t) == TensorErfc()(t)
+
     r_without_optional = erfc(t)
     expect = scipy_erfc(raw)
 
@@ -133,6 +135,8 @@ def test_erfc():
 def test_erfcx():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
+
+    assert erfcx(t) == TensorErfcx()(t)
 
     r_without_optional = erfcx(t)
     expect = scipy_erfcx(raw)
@@ -178,6 +182,8 @@ def test_erfi():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
+    assert erfi(t) == TensorErfi()(t)
+
     r_without_optional = erfi(t)
     expect = scipy_erfi(raw)
 
@@ -222,6 +228,8 @@ def test_erfinv():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
 
+    assert erfinv(t) == TensorErfinv()(t)
+
     r = erfinv(t)
     expect = scipy_erfinv(raw)
 
@@ -240,6 +248,8 @@ def test_erfinv():
 def test_erfcinv():
     raw = np.random.rand(10, 8, 5)
     t = tensor(raw, chunk_size=3)
+
+    assert erfcinv(t) == TensorErfcinv()(t)
 
     r = erfcinv(t)
     expect = scipy_erfcinv(raw)
