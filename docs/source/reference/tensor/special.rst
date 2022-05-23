@@ -48,6 +48,7 @@ Error function
    mars.tensor.special.erfi
    mars.tensor.special.erfinv
    mars.tensor.special.erfcinv
+   mars.tensor.special.wofz
 
 
 Ellipsoidal harmonics
