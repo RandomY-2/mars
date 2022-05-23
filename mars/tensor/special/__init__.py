@@ -28,6 +28,8 @@ try:
         TensorErfinv,
         erfcinv,
         TensorErfcinv,
+        wofz,
+        TensorWofz,
     )
     from .gamma_funcs import (
         gamma,

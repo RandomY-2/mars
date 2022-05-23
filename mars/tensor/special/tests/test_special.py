@@ -21,6 +21,7 @@ from scipy.special import (
     erfi as scipy_erfi,
     erfinv as scipy_erfinv,
     erfcinv as scipy_erfcinv,
+    wofz as scipy_wofz,
     betainc as scipy_betainc,
 )
 
@@ -39,6 +40,8 @@ from ..err_fresnel import (
     TensorErfinv,
     erfcinv,
     TensorErfcinv,
+    wofz,
+    TensorWofz,
 )
 from ..gamma_funcs import (
     gammaln,
@@ -252,6 +255,25 @@ def test_erfcinv():
     assert r.nsplits == t.nsplits
     for c in r.chunks:
         assert isinstance(c.op, TensorErfcinv)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+
+def test_wofz():
+    raw = np.random.rand(10, 8, 5)
+    t = tensor(raw, chunk_size=3)
+
+    r = wofz(t)
+    expect = scipy_wofz(raw)
+
+    assert r.shape == raw.shape
+    assert r.dtype == expect.dtype
+
+    t, r = tile(t, r)
+
+    assert r.nsplits == t.nsplits
+    for c in r.chunks:
+        assert isinstance(c.op, TensorWofz)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape
 
