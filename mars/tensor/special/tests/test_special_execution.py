@@ -37,6 +37,7 @@ from ... import special as mt_special
         "erfi",
         "erfinv",
         "wofz",
+        "dawsn",
         "entr",
     ],
 )

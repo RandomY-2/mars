@@ -739,6 +739,7 @@ class SparseArray(SparseNDArray):
     entr = partialmethod(_scipy_unary, "entr")
 
     wofz = partialmethod(_scipy_unary, "wofz")
+    dawsn = partialmethod(_scipy_unary, "dawsn")
 
     rel_entr = partialmethod(_scipy_binary, "rel_entr")
     kl_div = partialmethod(_scipy_binary, "kl_div")

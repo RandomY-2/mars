@@ -30,6 +30,8 @@ try:
         TensorErfcinv,
         wofz,
         TensorWofz,
+        dawsn,
+        TensorDawsn,
     )
     from .gamma_funcs import (
         gamma,

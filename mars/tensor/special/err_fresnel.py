@@ -61,6 +61,12 @@ class TensorWofz(TensorSpecialUnaryOp):
     _func_name = "wofz"
 
 
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary")
+class TensorDawsn(TensorSpecialUnaryOp):
+    _func_name = "dawsn"
+
+
 @implement_scipy(spspecial.erf)
 @infer_dtype(spspecial.erf)
 def erf(x, out=None, where=None, **kwargs):
@@ -152,4 +158,11 @@ def erfcinv(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.wofz)
 def wofz(x, out=None, where=None, **kwargs):
     op = TensorWofz(**kwargs)
+    return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.dawsn)
+@infer_dtype(spspecial.dawsn)
+def dawsn(x, out=None, where=None, **kwargs):
+    op = TensorDawsn(**kwargs)
     return op(x, out=out, where=where)

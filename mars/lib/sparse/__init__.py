@@ -272,6 +272,7 @@ erfinv = partial(_call_unary, "erfinv")
 erfcinv = partial(_call_unary, "erfcinv")
 
 wofz = partial(_call_unary, "wofz")
+dawsn = partial(_call_unary, "dawsn")
 
 jv = partial(_call_bin, "jv")
 jve = partial(_call_bin, "jve")
