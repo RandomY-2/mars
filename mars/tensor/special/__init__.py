@@ -32,6 +32,8 @@ try:
         TensorWofz,
         dawsn,
         TensorDawsn,
+        voigt_profile,
+        TensorVoigtProfile,
     )
     from .gamma_funcs import (
         gamma,

@@ -38,6 +38,7 @@ from ... import special as mt_special
         "erfinv",
         "wofz",
         "dawsn",
+        "voigt_profile",
         "entr",
     ],
 )

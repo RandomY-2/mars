@@ -50,6 +50,7 @@ Error function
    mars.tensor.special.erfcinv
    mars.tensor.special.wofz
    mars.tensor.special.dawsn
+   mars.tensor.special.voigt_profile
 
 
 Ellipsoidal harmonics

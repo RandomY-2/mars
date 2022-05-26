@@ -273,6 +273,7 @@ erfcinv = partial(_call_unary, "erfcinv")
 
 wofz = partial(_call_unary, "wofz")
 dawsn = partial(_call_unary, "dawsn")
+voigt_profile = partial(call_sparse, "voigt_profile")
 
 jv = partial(_call_bin, "jv")
 jve = partial(_call_bin, "jve")

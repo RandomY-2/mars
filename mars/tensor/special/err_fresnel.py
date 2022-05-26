@@ -16,7 +16,7 @@ import scipy.special as spspecial
 
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
-from .core import TensorSpecialUnaryOp, _register_special_op
+from .core import TensorSpecialUnaryOp, TensorSpecialMultiOp, _register_special_op
 
 
 @_register_special_op
@@ -65,6 +65,12 @@ class TensorWofz(TensorSpecialUnaryOp):
 @arithmetic_operand(sparse_mode="unary")
 class TensorDawsn(TensorSpecialUnaryOp):
     _func_name = "dawsn"
+
+
+@_register_special_op
+class TensorVoigtProfile(TensorSpecialMultiOp):
+    _ARG_COUNT = 3
+    _func_name = "voigt_profile"
 
 
 @implement_scipy(spspecial.erf)
@@ -166,3 +172,10 @@ def wofz(x, out=None, where=None, **kwargs):
 def dawsn(x, out=None, where=None, **kwargs):
     op = TensorDawsn(**kwargs)
     return op(x, out=out, where=where)
+
+
+@implement_scipy(spspecial.voigt_profile)
+@infer_dtype(spspecial.voigt_profile)
+def voigt_profile(x, sigma, gamma, out=None, **kwargs):
+    op = TensorVoigtProfile(**kwargs)
+    return op(x, sigma, gamma, out=out)

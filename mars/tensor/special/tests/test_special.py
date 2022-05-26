@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from re import X
 import numpy as np
 from scipy.special import (
     gammaln as scipy_gammaln,
@@ -23,6 +24,7 @@ from scipy.special import (
     erfcinv as scipy_erfcinv,
     wofz as scipy_wofz,
     dawsn as scipy_dawsn,
+    voigt_profile as scipy_voigt_profile,
     betainc as scipy_betainc,
 )
 
@@ -45,6 +47,8 @@ from ..err_fresnel import (
     TensorWofz,
     dawsn,
     TensorDawsn,
+    voigt_profile,
+    TensorVoigtProfile,
 )
 from ..gamma_funcs import (
     gammaln,
@@ -296,6 +300,46 @@ def test_dawsn():
     assert r.nsplits == t.nsplits
     for c in r.chunks:
         assert isinstance(c.op, TensorDawsn)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+
+def test_voigt_profile():
+    x_raw = np.random.rand(4, 3, 2)
+    sigma_raw = np.random.rand(4, 3, 2)
+    gamma_raw = np.random.rand(4, 3, 2)
+
+    x = tensor(x_raw, chunk_size=3)
+    sigma = tensor(sigma_raw, chunk_size=3)
+    gamma = tensor(gamma_raw, chunk_size=3)
+
+    r = voigt_profile(x, sigma, gamma)
+
+    result_without_optional = r.execute().fetch()
+    expected = scipy_voigt_profile(x_raw, sigma_raw, gamma_raw)
+
+    np.testing.assert_array_equal(result_without_optional, expected)
+
+    for c in result_without_optional.chunks:
+        assert isinstance(c.op, TensorVoigtProfile)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    out = tensor(x_raw, chunk_size=3)
+    r_with_optinal = voigt_profile(x, sigma, gamma, out=out)
+
+    result_with_optional = r_with_optinal.execute().fetch()
+
+    np.testing.assert_array_equal(result_with_optional, expected)
+    np.testing.assert_array_equal(out, expected)
+
+    for c in result_with_optional.chunks:
+        assert isinstance(c.op, TensorVoigtProfile)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+    for c in out.chunks:
+        assert isinstance(c.op, TensorVoigtProfile)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape
 
