@@ -40,6 +40,7 @@ from ... import special as mt_special
         "dawsn",
         "voigt_profile",
         "entr",
+        "ellipk",
     ],
 )
 def test_unary_execution(setup, func):

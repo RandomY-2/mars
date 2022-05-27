@@ -133,5 +133,9 @@ try:
         ellip_normal,
         TensorEllipNormal,
     )
+    from .ellip_funcs import (
+        ellipk,
+        TensorEllipk,
+    )
 except ImportError:  # pragma: no cover
     pass
