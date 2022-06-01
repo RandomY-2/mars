@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import numpy as np
+import scipy
+import pytest
 from scipy.special import (
     gammaln as scipy_gammaln,
     erf as scipy_erf,
@@ -363,7 +365,7 @@ def test_ellipkm1():
         assert c.shape == c.inputs[0].shape
 
 
-def test_ellipeinc():
+def test_ellipkinc():
     raw1 = np.random.rand(4, 3, 2)
     raw2 = np.random.rand(4, 3, 2)
     a = tensor(raw1, chunk_size=3)
@@ -424,6 +426,9 @@ def test_ellipeinc():
         assert chunk.shape == chunk.inputs[0].shape
 
 
+@pytest.mark.skipif(
+    scipy.__version__ < "1.8.0", reason="function not implemented."
+)
 def test_elliprc():
     raw1 = np.random.rand(4, 3, 2)
     raw2 = np.random.rand(4, 3, 2)
@@ -445,6 +450,9 @@ def test_elliprc():
         assert chunk.shape == chunk.inputs[0].shape
 
 
+@pytest.mark.skipif(
+    scipy.__version__ < "1.8.0", reason="function not implemented."
+)
 def test_elliprd():
     raw1 = np.random.rand(4, 3, 2)
     raw2 = np.random.rand(4, 3, 2)
@@ -468,6 +476,9 @@ def test_elliprd():
         assert chunk.shape == chunk.inputs[0].shape
 
 
+@pytest.mark.skipif(
+    scipy.__version__ < "1.8.0", reason="function not implemented."
+)
 def test_elliprf():
     raw1 = np.random.rand(4, 3, 2)
     raw2 = np.random.rand(4, 3, 2)
@@ -491,6 +502,9 @@ def test_elliprf():
         assert chunk.shape == chunk.inputs[0].shape
 
 
+@pytest.mark.skipif(
+    scipy.__version__ < "1.8.0", reason="function not implemented."
+)
 def test_elliprg():
     raw1 = np.random.rand(4, 3, 2)
     raw2 = np.random.rand(4, 3, 2)
@@ -514,6 +528,9 @@ def test_elliprg():
         assert chunk.shape == chunk.inputs[0].shape
 
 
+@pytest.mark.skipif(
+    scipy.__version__ < "1.8.0", reason="function not implemented."
+)
 def test_elliprj():
     raw1 = np.random.rand(4, 3, 2)
     raw2 = np.random.rand(4, 3, 2)
