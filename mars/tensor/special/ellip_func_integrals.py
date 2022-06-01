@@ -120,15 +120,15 @@ def ellipeinc(phi, m, **kwargs):
     return op(phi, m)
 
 
-@implement_scipy(spspecial.elliprc)
-@infer_dtype(spspecial.elliprc)
+@implement_scipy(getattr(spspecial, "elliprc", None))
+@infer_dtype(getattr(spspecial, "elliprc", None))
 def elliprc(x, y, **kwargs):
     op = TensorElliprc(**kwargs)
     return op(x, y)
 
 
-@implement_scipy(spspecial.elliprd)
-@infer_dtype(spspecial.elliprd)
+@implement_scipy(getattr(spspecial, "elliprd", None))
+@infer_dtype(getattr(spspecial, "elliprd", None))
 def elliprd(x, y, z, **kwargs):
     op = TensorElliprd(**kwargs)
     return op(x, y, z)
