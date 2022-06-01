@@ -15,6 +15,16 @@
 import scipy.special as spspecial
 
 from ..utils import infer_dtype, implement_scipy
-from .core import _register_special_op, TensorSpecialMultiOp, TensorSpecialUnaryOp
+from .core import TensorSpecialUnaryOp, _register_special_op, TensorSpecialMultiOp
 
 
+@_register_special_op
+class TensorEllipk(TensorSpecialUnaryOp):
+    _func_name = "ellipk"
+
+
+@implement_scipy(spspecial.ellipk)
+@infer_dtype(spspecial.ellipk)
+def ellipk(m, **kwargs):
+    op = TensorEllipk(**kwargs)
+    return op(m)
