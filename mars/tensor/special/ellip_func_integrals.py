@@ -155,5 +155,5 @@ try:
     def elliprj(x, y, z, p, **kwargs):
         op = TensorElliprj(**kwargs)
         return op(x, y, z, p)
-except AttributeError:
+except AttributeError: # certain elliptic functions and integrals are not implemented before scipy v1.8.0
     pass
