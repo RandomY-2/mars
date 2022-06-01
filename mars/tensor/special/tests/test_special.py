@@ -21,6 +21,7 @@ from scipy.special import (
     erfi as scipy_erfi,
     erfinv as scipy_erfinv,
     erfcinv as scipy_erfcinv,
+    ellipk as scipy_ellipk,
     betainc as scipy_betainc,
 )
 
@@ -45,6 +46,10 @@ from ..gamma_funcs import (
     TensorGammaln,
     betainc,
     TensorBetaInc,
+)
+from ..ellip_func_integrals import (
+    ellipk,
+    TensorEllipk,
 )
 
 
@@ -289,5 +294,24 @@ def test_beta_inc():
     assert tiled_a.nsplits == b.nsplits
     for c in r.chunks:
         assert isinstance(c.op, TensorBetaInc)
+        assert c.index == c.inputs[0].index
+        assert c.shape == c.inputs[0].shape
+
+
+def test_ellipk():
+    raw = np.random.rand(10, 8, 5)
+    t = tensor(raw, chunk_size=3)
+
+    r = ellipk(t)
+    expect = scipy_ellipk(raw)
+
+    assert r.shape == raw.shape
+    assert r.dtype == expect.dtype
+
+    t, r = tile(t, r)
+
+    assert r.nsplits == t.nsplits
+    for c in r.chunks:
+        assert isinstance(c.op, TensorEllipk)
         assert c.index == c.inputs[0].index
         assert c.shape == c.inputs[0].shape

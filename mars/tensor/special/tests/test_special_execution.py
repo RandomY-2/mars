@@ -37,6 +37,7 @@ from ... import special as mt_special
         "erfi",
         "erfinv",
         "entr",
+        "ellipk",
     ],
 )
 def test_unary_execution(setup, func):
