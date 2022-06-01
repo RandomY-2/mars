@@ -1089,26 +1089,6 @@ class _IsolatedSession(AbstractAsyncSession):
         from ...tensor.core import TensorOrder
         from ...tensor.array_utils import get_array_module
 
-        def process_merged(merged):
-            if hasattr(tileable, "order") and tileable.ndim > 0:
-                module = get_array_module(merged)
-                if tileable.order == TensorOrder.F_ORDER and hasattr(
-                    module, "asfortranarray"
-                ):
-                    merged = module.asfortranarray(merged)
-                elif tileable.order == TensorOrder.C_ORDER and hasattr(
-                    module, "ascontiguousarray"
-                ):
-                    merged = module.ascontiguousarray(merged)
-            if (
-                hasattr(tileable, "isscalar")
-                and tileable.isscalar()
-                and getattr(merged, "size", None) == 1
-            ):
-                merged = merged.item()
-
-            return merged
-
         if kwargs:  # pragma: no cover
             unexpected_keys = ", ".join(list(kwargs.keys()))
             raise TypeError(f"`fetch` got unexpected arguments: {unexpected_keys}")
@@ -1160,11 +1140,22 @@ class _IsolatedSession(AbstractAsyncSession):
                     for fetch_info in fetch_infos
                 ]
                 merged = merge_chunks(index_to_data)
-                if isinstance(merged, tuple):
-                    # for result with multiple outputs, we process each output instead of the outside tuple
-                    merged = tuple([process_merged(output) for output in merged])
-                else:
-                    merged = process_merged(merged)
+                if hasattr(tileable, "order") and tileable.ndim > 0:
+                    module = get_array_module(merged)
+                    if tileable.order == TensorOrder.F_ORDER and hasattr(
+                        module, "asfortranarray"
+                    ):
+                        merged = module.asfortranarray(merged)
+                    elif tileable.order == TensorOrder.C_ORDER and hasattr(
+                        module, "ascontiguousarray"
+                    ):
+                        merged = module.ascontiguousarray(merged)
+                if (
+                    hasattr(tileable, "isscalar")
+                    and tileable.isscalar()
+                    and getattr(merged, "size", None) == 1
+                ):
+                    merged = merged.item()
 
                 result.append(self._process_result(tileable, merged))
             return result
