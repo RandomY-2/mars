@@ -14,6 +14,8 @@
 
 import scipy.special as spspecial
 
+from mars.core.entity.executable import ExecutableTuple
+
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
 from .core import TensorSpecialUnaryOp, _register_special_op
@@ -56,10 +58,15 @@ class TensorErfcinv(TensorSpecialUnaryOp):
 
 
 @_register_special_op
-@arithmetic_operand(sparse_mode="unary", multi_outputs=True)
-class TensorFresnel(TensorSpecialUnaryOp):
+@arithmetic_operand(sparse_mode="unary", item_index=0)
+class TensorFresnelS(TensorSpecialUnaryOp):
     _func_name = "fresnel"
-    dtype = tuple
+
+
+@_register_special_op
+@arithmetic_operand(sparse_mode="unary", item_index=1)
+class TensorFresnelC(TensorSpecialUnaryOp):
+    _func_name = "fresnel"
 
 
 @implement_scipy(spspecial.erf)
@@ -150,7 +157,7 @@ def erfcinv(x, out=None, where=None, **kwargs):
 
 
 @implement_scipy(spspecial.fresnel)
-@infer_dtype(spspecial.fresnel)
 def fresnel(x, out=None, where=None, **kwargs):
-    op = TensorFresnel(**kwargs)
-    return op(x, out=out, where=where)
+    op_s = TensorFresnelC(**kwargs)
+    op_c = TensorFresnelC(**kwargs)
+    return ExecutableTuple([op_s(x, out=out, where=where), op_c(x, out=out, where=where)])

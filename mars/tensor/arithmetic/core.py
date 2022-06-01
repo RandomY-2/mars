@@ -382,8 +382,8 @@ class TensorUnaryOpMixin(TensorElementWiseWithInputs):
                 try:
                     ctx[op.outputs[0].key] = _handle_out_dtype(ret, op.dtype)
                 except AttributeError:
-                    assert cls._multi_outputs
-                    ctx[op.outputs[0].key] = tuple([_handle_out_dtype(output, op.dtype) for output in ret])
+                    assert cls._item_index != -1
+                    ctx[op.outputs[0].key] = _handle_out_dtype(ret[cls._item_index], op.dtype)
 
 
 class TensorUnaryOp(TensorOperand, TensorUnaryOpMixin):

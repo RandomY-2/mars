@@ -20,7 +20,7 @@ import numpy as np
 from ...utils import TreeReductionBuilder
 
 
-def arithmetic_operand(cls=None, init=True, sparse_mode=None, multi_outputs=False):
+def arithmetic_operand(cls=None, init=True, sparse_mode=None, item_index=-1):
     def _decorator(cls):
         def __init__(self, casting="same_kind", err=None, **kw):
             err = err if err is not None else np.geterr()
@@ -60,7 +60,7 @@ def arithmetic_operand(cls=None, init=True, sparse_mode=None, multi_outputs=Fals
         elif sparse_mode is not None:  # pragma: no cover
             raise ValueError(f"Unsupported sparse mode: {sparse_mode}")
 
-        cls._multi_outputs = multi_outputs
+        cls._item_index = item_index
 
         return cls
 
