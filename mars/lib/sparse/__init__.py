@@ -296,6 +296,15 @@ ellip_harm_2 = partial(call_sparse, "ellip_harm_2")
 ellip_normal = partial(call_sparse, "ellip_normal")
 
 ellipk = partial(_call_unary, "ellipk")
+ellipkm1 = partial(_call_unary, "ellipkm1")
+ellipkinc = partial(_call_bin, "ellipkinc")
+ellipe = partial(_call_unary, "ellipe")
+ellipeinc = partial(_call_bin, "ellipeinc")
+elliprc = partial(_call_bin, "elliprc")
+elliprd = partial(call_sparse, "elliprd")
+elliprf = partial(call_sparse, "elliprf")
+elliprg = partial(call_sparse, "elliprg")
+elliprj = partial(call_sparse, "elliprj")
 
 
 def equal(a, b, **_):

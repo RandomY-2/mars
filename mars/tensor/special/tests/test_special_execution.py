@@ -38,6 +38,8 @@ from ... import special as mt_special
         "erfinv",
         "entr",
         "ellipk",
+        "ellipkm1",
+        "ellipe",
     ],
 )
 def test_unary_execution(setup, func):
@@ -97,6 +99,9 @@ def test_unary_execution(setup, func):
         "hankel2",
         "hankel2e",
         "hyp0f1",
+        "ellipkinc",
+        "ellipeinc",
+        "elliprc",
     ],
 )
 def test_binary_execution(setup, func):
@@ -129,7 +134,7 @@ def test_binary_execution(setup, func):
     np.testing.assert_array_equal(result.toarray(), expected)
 
 
-@pytest.mark.parametrize("func", ["betainc", "betaincinv", "hyp1f1", "hyperu"])
+@pytest.mark.parametrize("func", ["betainc", "betaincinv", "hyp1f1", "hyperu", "elliprd", "elliprf", "elliprg"])
 def test_triple_execution(setup, func):
     sp_func = getattr(spspecial, func)
     mt_func = getattr(mt_special, func)
@@ -164,7 +169,7 @@ def test_triple_execution(setup, func):
     np.testing.assert_array_equal(result.toarray(), expected)
 
 
-@pytest.mark.parametrize("func", ["hyp2f1", "ellip_normal"])
+@pytest.mark.parametrize("func", ["hyp2f1", "ellip_normal", "elliprj"])
 def test_quadruple_execution(setup, func):
     sp_func = getattr(spspecial, func)
     mt_func = getattr(mt_special, func)

@@ -130,6 +130,24 @@ try:
     from .ellip_func_integrals import (
         ellipk,
         TensorEllipk,
+        ellipkm1,
+        TensorEllipkm1,
+        ellipkinc,
+        TensorEllipkinc,
+        ellipe,
+        TensorEllipe,
+        ellipeinc,
+        TensorEllipeinc,
+        elliprc,
+        TensorElliprc,
+        elliprd,
+        TensorElliprd,
+        elliprf,
+        TensorElliprf,
+        elliprg,
+        TensorElliprg,
+        elliprj,
+        TensorElliprj,
     )
 except ImportError:  # pragma: no cover
     pass
