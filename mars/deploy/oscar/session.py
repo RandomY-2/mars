@@ -1133,6 +1133,7 @@ class _IsolatedSession(AbstractAsyncSession):
                 itertools.chain(*fetch_infos_list), fetched_data
             ):
                 fetch_info.data = data
+
             result = []
             for tileable, fetch_infos in zip(tileables, fetch_infos_list):
                 index_to_data = [
@@ -1156,7 +1157,6 @@ class _IsolatedSession(AbstractAsyncSession):
                     and getattr(merged, "size", None) == 1
                 ):
                     merged = merged.item()
-
                 result.append(self._process_result(tileable, merged))
             return result
 

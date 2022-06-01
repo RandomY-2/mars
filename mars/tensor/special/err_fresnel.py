@@ -158,6 +158,7 @@ def erfcinv(x, out=None, where=None, **kwargs):
     return op(x, out=out, where=where)
 
 
+# TODO: add infer_dtype and try to avoid re-executing the same fresnel computation twice
 @implement_scipy(spspecial.fresnel)
 def fresnel(x, out=None, where=None, **kwargs):
     op_s = TensorFresnelC(**kwargs)
