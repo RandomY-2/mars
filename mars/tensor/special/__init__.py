@@ -127,5 +127,9 @@ try:
         ellip_normal,
         TensorEllipNormal,
     )
+    from .ellip_func_integrals import (
+        ellipk,
+        TensorEllipk,
+    )
 except ImportError:  # pragma: no cover
     pass

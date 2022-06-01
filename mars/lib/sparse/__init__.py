@@ -295,6 +295,8 @@ ellip_harm = partial(call_sparse, "ellip_harm")
 ellip_harm_2 = partial(call_sparse, "ellip_harm_2")
 ellip_normal = partial(call_sparse, "ellip_normal")
 
+ellipk = partial(_call_unary, "ellipk")
+
 
 def equal(a, b, **_):
     try:
