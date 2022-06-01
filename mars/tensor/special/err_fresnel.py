@@ -14,8 +14,7 @@
 
 import scipy.special as spspecial
 
-from mars.core.entity.executable import ExecutableTuple
-
+from ...core import ExecutableTuple
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
 from .core import TensorSpecialUnaryOp, _register_special_op
@@ -161,6 +160,6 @@ def erfcinv(x, out=None, where=None, **kwargs):
 # TODO: add infer_dtype and try to avoid re-executing the same fresnel computation twice
 @implement_scipy(spspecial.fresnel)
 def fresnel(x, out=None, where=None, **kwargs):
-    op_s = TensorFresnelC(**kwargs)
+    op_s = TensorFresnelS(**kwargs)
     op_c = TensorFresnelC(**kwargs)
     return ExecutableTuple([op_s(x, out=out, where=where), op_c(x, out=out, where=where)])

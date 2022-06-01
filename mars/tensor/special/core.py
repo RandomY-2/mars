@@ -13,7 +13,6 @@
 # limitations under the License.
 
 
-from mars.core.entity.executable import ExecutableTuple
 from ... import opcodes
 from ..arithmetic.core import TensorUnaryOp, TensorBinOp, TensorMultiOp
 from ..array_utils import (
