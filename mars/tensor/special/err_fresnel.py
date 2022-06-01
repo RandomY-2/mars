@@ -68,7 +68,7 @@ class TensorFresnelS(TensorSpecialUnaryOp):
 @arithmetic_operand(sparse_mode="unary")
 class TensorFresnelC(TensorSpecialUnaryOp):
     _func_name = "fresnel"
-    _item_index = 0
+    _item_index = 1
 
 
 @implement_scipy(spspecial.erf)
