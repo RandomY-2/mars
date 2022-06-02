@@ -178,7 +178,6 @@ def test_quadruple_execution(setup, func):
     d = tensor(raw4, chunk_size=3)
 
     r = mt_func(a, b, c, d)
-
     result = r.execute().fetch()
     expected = sp_func(raw1, raw2, raw3, raw4)
 
