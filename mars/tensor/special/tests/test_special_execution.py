@@ -103,7 +103,10 @@ def test_unary_execution(setup, func):
         "ellipkinc",
         "ellipeinc",
         pytest.param(
-            "elliprc", marks=pytest.mark.skipif(scipy.__version__ < "1.8.0", reason="function not implemented in scipy.")
+            "elliprc",
+            marks=pytest.mark.skipif(
+                scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
+            ),
         ),
         pytest.skip,
     ],
@@ -146,13 +149,22 @@ def test_binary_execution(setup, func):
         "hyp1f1",
         "hyperu",
         pytest.param(
-            "elliprd", marks=pytest.mark.skipif(scipy.__version__ < "1.8.0", reason="function not implemented in scipy.")
+            "elliprd",
+            marks=pytest.mark.skipif(
+                scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
+            ),
         ),
         pytest.param(
-            "elliprf", marks=pytest.mark.skipif(scipy.__version__ < "1.8.0", reason="function not implemented in scipy.")
+            "elliprf",
+            marks=pytest.mark.skipif(
+                scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
+            ),
         ),
         pytest.param(
-            "elliprg", marks=pytest.mark.skipif(scipy.__version__ < "1.8.0", reason="function not implemented in scipy.")
+            "elliprg",
+            marks=pytest.mark.skipif(
+                scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
+            ),
         ),
     ],
 )
@@ -196,7 +208,10 @@ def test_triple_execution(setup, func):
         "hyp2f1",
         "ellip_normal",
         pytest.param(
-            "elliprj", marks=pytest.mark.skipif(scipy.__version__ < "1.8.0", reason="function not implemented in scipy.")
+            "elliprj",
+            marks=pytest.mark.skipif(
+                scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
+            ),
         ),
     ],
 )
