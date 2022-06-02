@@ -427,7 +427,7 @@ def test_ellipeinc():
 
 
 @pytest.mark.skipif(
-    scipy.__version__ < "1.8.0", reason="function not implemented."
+    scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
 )
 def test_elliprc():
     raw1 = np.random.rand(4, 3, 2)
@@ -451,7 +451,7 @@ def test_elliprc():
 
 
 @pytest.mark.skipif(
-    scipy.__version__ < "1.8.0", reason="function not implemented."
+    scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
 )
 def test_elliprd():
     raw1 = np.random.rand(4, 3, 2)
@@ -477,7 +477,7 @@ def test_elliprd():
 
 
 @pytest.mark.skipif(
-    scipy.__version__ < "1.8.0", reason="function not implemented."
+    scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
 )
 def test_elliprf():
     raw1 = np.random.rand(4, 3, 2)
@@ -503,7 +503,7 @@ def test_elliprf():
 
 
 @pytest.mark.skipif(
-    scipy.__version__ < "1.8.0", reason="function not implemented."
+    scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
 )
 def test_elliprg():
     raw1 = np.random.rand(4, 3, 2)
@@ -529,7 +529,7 @@ def test_elliprg():
 
 
 @pytest.mark.skipif(
-    scipy.__version__ < "1.8.0", reason="function not implemented."
+    scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
 )
 def test_elliprj():
     raw1 = np.random.rand(4, 3, 2)
