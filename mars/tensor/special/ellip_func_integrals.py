@@ -125,36 +125,39 @@ def ellipeinc(phi, m, **kwargs):
     return op(phi, m)
 
 
-@implement_scipy(spspecial.elliprc)
-@infer_dtype(spspecial.elliprc)
-def elliprc(x, y, **kwargs):
-    op = TensorElliprc(**kwargs)
-    return op(x, y)
+try:
 
+    @implement_scipy(spspecial.elliprc)
+    @infer_dtype(spspecial.elliprc)
+    def elliprc(x, y, **kwargs):
+        op = TensorElliprc(**kwargs)
+        return op(x, y)
 
-@implement_scipy(spspecial.elliprd)
-@infer_dtype(spspecial.elliprd)
-def elliprd(x, y, z, **kwargs):
-    op = TensorElliprd(**kwargs)
-    return op(x, y, z)
+    @implement_scipy(spspecial.elliprd)
+    @infer_dtype(spspecial.elliprd)
+    def elliprd(x, y, z, **kwargs):
+        op = TensorElliprd(**kwargs)
+        return op(x, y, z)
 
+    @implement_scipy(spspecial.elliprf)
+    @infer_dtype(spspecial.elliprf)
+    def elliprf(x, y, z, **kwargs):
+        op = TensorElliprf(**kwargs)
+        return op(x, y, z)
 
-@implement_scipy(spspecial.elliprf)
-@infer_dtype(spspecial.elliprf)
-def elliprf(x, y, z, **kwargs):
-    op = TensorElliprf(**kwargs)
-    return op(x, y, z)
+    @implement_scipy(spspecial.elliprg)
+    @infer_dtype(spspecial.elliprg)
+    def elliprg(x, y, z, **kwargs):
+        op = TensorElliprg(**kwargs)
+        return op(x, y, z)
 
+    @implement_scipy(spspecial.elliprj)
+    @infer_dtype(spspecial.elliprj)
+    def elliprj(x, y, z, p, **kwargs):
+        op = TensorElliprj(**kwargs)
+        return op(x, y, z, p)
 
-@implement_scipy(spspecial.elliprg)
-@infer_dtype(spspecial.elliprg)
-def elliprg(x, y, z, **kwargs):
-    op = TensorElliprg(**kwargs)
-    return op(x, y, z)
-
-
-@implement_scipy(spspecial.elliprj)
-@infer_dtype(spspecial.elliprj)
-def elliprj(x, y, z, p, **kwargs):
-    op = TensorElliprj(**kwargs)
-    return op(x, y, z, p)
+except AttributeError:
+    # These functions are not implemented before scipy v1.8 so
+    # spsecial.func may cause AttributeError
+    pass

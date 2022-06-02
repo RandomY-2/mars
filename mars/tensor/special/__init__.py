@@ -149,5 +149,5 @@ try:
         elliprj,
         TensorElliprj,
     )
-except ImportError or AttributeError:  # pragma: no cover
+except ImportError:  # pragma: no cover
     pass
