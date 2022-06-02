@@ -108,7 +108,6 @@ def test_unary_execution(setup, func):
                 scipy.__version__ < "1.8.0", reason="function not implemented in scipy."
             ),
         ),
-        pytest.skip,
     ],
 )
 def test_binary_execution(setup, func):
