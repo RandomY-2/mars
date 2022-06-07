@@ -35,7 +35,7 @@ Bessel functions
    mars.tensor.special.hankel2e
 
 
-Error function and Fresnel Integrals
+Error functions and fresnel integrals
 --------------
 
 .. autosummary::
