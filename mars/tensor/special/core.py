@@ -31,7 +31,12 @@ _func_name_to_special_cls = {}
 
 def _register_special_op(cls):
     if cls._func_name is not None:
-        _func_name_to_special_cls[cls._func_name] = cls
+        if getattr(cls, "_output_index", None) is None:
+            _func_name_to_special_cls[cls._func_name] = cls
+        else:
+            if cls._func_name not in _func_name_to_special_cls:
+                _func_name_to_special_cls[cls._func_name] = [None for _ in range(cls._func_outputs)]
+            _func_name_to_special_cls[cls._func_name][cls._output_index] = cls
     return cls
 
 
@@ -41,7 +46,11 @@ class TensorSpecialOperandMixin:
 
     def __new__(cls, *args, **kwargs):
         if cls._func_name is not None:
-            return object.__new__(_func_name_to_special_cls[cls._func_name])
+            if getattr(cls, "_output_index", None) is None:
+                return object.__new__(_func_name_to_special_cls[cls._func_name])
+            else:
+                return object.__new__(_func_name_to_special_cls[cls._func_name][cls._output_index])
+
         return super().__new__(cls, *args, **kwargs)
 
     @classmethod

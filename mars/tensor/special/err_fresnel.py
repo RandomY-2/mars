@@ -60,14 +60,16 @@ class TensorErfcinv(TensorSpecialUnaryOp):
 @arithmetic_operand(sparse_mode="unary")
 class TensorFresnelS(TensorSpecialUnaryOp):
     _func_name = "fresnel"
-    _item_index = 0
+    _output_index = 0
+    _func_outputs = 2
 
 
 @_register_special_op
 @arithmetic_operand(sparse_mode="unary")
 class TensorFresnelC(TensorSpecialUnaryOp):
     _func_name = "fresnel"
-    _item_index = 1
+    _output_index = 1
+    _func_outputs = 2
 
 
 @implement_scipy(spspecial.erf)
@@ -162,4 +164,7 @@ def erfcinv(x, out=None, where=None, **kwargs):
 def fresnel(x, out=None, where=None, **kwargs):
     op_s = TensorFresnelS(**kwargs)
     op_c = TensorFresnelC(**kwargs)
-    return ExecutableTuple([op_s(x, out=out, where=where), op_c(x, out=out, where=where)])
+
+    return ExecutableTuple(
+        [op_s(x, out=out, where=where), op_c(x, out=out, where=where)]
+    )
