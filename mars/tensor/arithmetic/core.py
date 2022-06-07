@@ -379,10 +379,9 @@ class TensorUnaryOpMixin(TensorElementWiseWithInputs):
                 else:
                     ret = cls._execute_cpu(op, xp, inputs[0], **kw)
 
-                try:
+                if getattr(cls, "_output_index", None) is None:
                     ctx[op.outputs[0].key] = _handle_out_dtype(ret, op.dtype)
-                except AttributeError:
-                    assert cls._output_index != -1
+                else:
                     ctx[op.outputs[0].key] = _handle_out_dtype(
                         ret[cls._output_index], op.dtype
                     )
