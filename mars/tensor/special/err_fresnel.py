@@ -20,6 +20,9 @@ from ..utils import infer_dtype, implement_scipy
 from .core import TensorSpecialUnaryOp, _register_special_op
 
 
+_special_func_to_outputs = {}
+
+
 @_register_special_op
 @arithmetic_operand(sparse_mode="unary")
 class TensorErf(TensorSpecialUnaryOp):
@@ -62,6 +65,7 @@ class TensorFresnelS(TensorSpecialUnaryOp):
     _func_name = "fresnel"
     _output_index = 0
     _func_outputs = 2
+    _func_to_outputs = _special_func_to_outputs
 
 
 @_register_special_op
@@ -70,6 +74,7 @@ class TensorFresnelC(TensorSpecialUnaryOp):
     _func_name = "fresnel"
     _output_index = 1
     _func_outputs = 2
+    _func_to_outputs = _special_func_to_outputs
 
 
 @implement_scipy(spspecial.erf)
