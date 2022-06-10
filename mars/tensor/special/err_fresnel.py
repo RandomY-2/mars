@@ -17,10 +17,7 @@ import scipy.special as spspecial
 from ...core import ExecutableTuple
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
-from .core import TensorSpecialUnaryOp, _register_special_op
-
-
-_special_func_to_outputs = {}
+from .core import TensorSpecialUnaryOp, TensorTupleElement, _register_special_op
 
 
 @_register_special_op
@@ -61,20 +58,18 @@ class TensorErfcinv(TensorSpecialUnaryOp):
 
 @_register_special_op
 @arithmetic_operand(sparse_mode="unary")
-class TensorFresnelS(TensorSpecialUnaryOp):
+class TensorFresnelS(TensorTupleElement):
     _func_name = "fresnel"
-    _output_index = 0
     _func_outputs = 2
-    _func_to_outputs = _special_func_to_outputs
+    _output_index = 0
 
 
 @_register_special_op
 @arithmetic_operand(sparse_mode="unary")
-class TensorFresnelC(TensorSpecialUnaryOp):
+class TensorFresnelC(TensorTupleElement):
     _func_name = "fresnel"
-    _output_index = 1
     _func_outputs = 2
-    _func_to_outputs = _special_func_to_outputs
+    _output_index = 1
 
 
 @implement_scipy(spspecial.erf)

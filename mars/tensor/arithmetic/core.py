@@ -358,8 +358,6 @@ class TensorUnaryOpMixin(TensorElementWiseWithInputs):
         inputs, device_id, xp = as_same_device(
             [ctx[c.key] for c in op.inputs], device=op.device, ret_extra=True
         )
-        if getattr(cls, "_output_index", None) is not None:
-            input_keys = [c.key for c in op.inputs]
 
         with device(device_id):
             kw = {"casting": op.casting} if op.out else {}
@@ -370,46 +368,18 @@ class TensorUnaryOpMixin(TensorElementWiseWithInputs):
                     inputs[-2].copy(),
                     inputs[-1],
                 )
-                if getattr(cls, "_output_index", None) is not None:
-                    input_keys = input_keys[:-2]
             elif op.out:
                 inputs, kw["out"] = inputs[:-1], inputs[-1].copy()
-                if getattr(cls, "_output_index", None) is not None:
-                    input_keys = input_keys[:-1]
             elif op.where:
                 inputs, kw["where"] = inputs[:-1], inputs[-1]
-                if getattr(cls, "_output_index", None) is not None:
-                    input_keys = input_keys[:-1]
 
             with np.errstate(**op.err):
-                _func_to_outputs = getattr(cls, "_func_to_outputs", None)
-                _tuple_func_cached = False
-                if (
-                    _func_to_outputs is not None
-                    and cls._func_name in _func_to_outputs
-                    and input_keys[0] in _func_to_outputs[cls._func_name]
-                ):
-                    _tuple_func_cached = True
-                    ret = _func_to_outputs[cls._func_name][input_keys[0]]
-                elif op.is_gpu():
+                if op.is_gpu():
                     ret = cls._execute_gpu(op, xp, inputs[0], **kw)
                 else:
                     ret = cls._execute_cpu(op, xp, inputs[0], **kw)
 
-                if getattr(cls, "_output_index", None) is None:
-                    ctx[op.outputs[0].key] = _handle_out_dtype(ret, op.dtype)
-                else:
-                    ctx[op.outputs[0].key] = _handle_out_dtype(
-                        ret[cls._output_index], op.dtype
-                    )
-                    if not _tuple_func_cached:
-                        if _func_to_outputs is None:
-                            _func_to_outputs = {}
-                        if cls._func_name not in _func_to_outputs:
-                            _func_to_outputs[cls._func_name] = {}
-                        if input_keys[0] in _func_to_outputs[cls._func_name]:
-                            _func_to_outputs[cls._func_name][input_keys[0]] = ret
-                        setattr(cls, "_func_to_outputs", _func_to_outputs)
+                ctx[op.outputs[0].key] = _handle_out_dtype(ret, op.dtype)
 
 
 class TensorUnaryOp(TensorOperand, TensorUnaryOpMixin):
