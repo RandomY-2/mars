@@ -128,7 +128,7 @@ class TensorSpecialMultiOp(TensorSpecialOperandMixin, TensorMultiOp):
                 ctx[op.outputs[0].key] = ret
 
 
-class TensorTupleElement(TensorSpecialUnaryOp):
+class TensorTupleElementOp(TensorSpecialUnaryOp):
     @classmethod
     def execute(cls, ctx, op):
         input_keys = [c.key for c in op.inputs]
