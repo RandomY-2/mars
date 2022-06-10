@@ -14,6 +14,7 @@
 
 
 from ... import opcodes
+from ..arithmetic.utils import arithmetic_operand
 from ..arithmetic.core import TensorUnaryOp, TensorBinOp, TensorMultiOp
 from ..array_utils import (
     np,
@@ -41,6 +42,25 @@ def _register_special_op(cls):
                 ]
             _func_name_to_special_cls[cls._func_name][cls._output_index] = cls
     return cls
+
+
+def tuple_element_tensor_generator():
+    output_index = 0
+
+    def inner(func_name, func_outputs):
+        nonlocal output_index
+
+        @_register_special_op
+        @arithmetic_operand(sparse_mode="unary")
+        class TensorTuple(TensorTupleElementOp):
+            _func_name = func_name
+            _func_outputs = func_outputs
+            _output_index = output_index
+
+        output_index += 1
+        return TensorTuple
+
+    return inner
 
 
 class TensorSpecialOperandMixin:
@@ -128,7 +148,7 @@ class TensorSpecialMultiOp(TensorSpecialOperandMixin, TensorMultiOp):
                 ctx[op.outputs[0].key] = ret
 
 
-class TensorTupleElement(TensorSpecialUnaryOp):
+class TensorTupleElementOp(TensorSpecialUnaryOp):
     @classmethod
     def execute(cls, ctx, op):
         input_keys = [c.key for c in op.inputs]

@@ -17,7 +17,7 @@ import scipy.special as spspecial
 from ...core import ExecutableTuple
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
-from .core import TensorSpecialUnaryOp, TensorTupleElement, _register_special_op
+from .core import TensorSpecialUnaryOp, TensorTupleElementOp, _register_special_op, tuple_element_tensor_generator
 
 
 @_register_special_op
@@ -58,7 +58,7 @@ class TensorErfcinv(TensorSpecialUnaryOp):
 
 @_register_special_op
 @arithmetic_operand(sparse_mode="unary")
-class TensorFresnelS(TensorTupleElement):
+class TensorFresnelS(TensorTupleElementOp):
     _func_name = "fresnel"
     _func_outputs = 2
     _output_index = 0
@@ -66,7 +66,7 @@ class TensorFresnelS(TensorTupleElement):
 
 @_register_special_op
 @arithmetic_operand(sparse_mode="unary")
-class TensorFresnelC(TensorTupleElement):
+class TensorFresnelC(TensorTupleElementOp):
     _func_name = "fresnel"
     _func_outputs = 2
     _output_index = 1
@@ -159,13 +159,21 @@ def erfcinv(x, out=None, where=None, **kwargs):
     return op(x, out=out, where=where)
 
 
-# TODO: try to avoid re-executing the same fresnel computation twice and reduce implementation code
+# TODO: try to reduce implementation code
 @implement_scipy(spspecial.fresnel)
 @infer_dtype(spspecial.fresnel, multi_outputs=True)
 def fresnel(x, out=None, where=None, **kwargs):
-    op_s = TensorFresnelS(**kwargs)
-    op_c = TensorFresnelC(**kwargs)
+    n_outputs = 2
+    generator = tuple_element_tensor_generator()
+    ops = [generator(func_name="fresnel", func_outputs=n_outputs)(**kwargs) for _ in range(n_outputs)]
 
-    return ExecutableTuple(
-        [op_s(x, out=out, where=where), op_c(x, out=out, where=where)]
-    )
+    return ExecutableTuple([op(x, out=out, where=where) for op in ops])
+
+    # op_s = TensorFresnelS(**kwargs)
+    # op_c = TensorFresnelC(**kwargs)
+
+    # print(op_s(x, out=out, where=where))
+
+    # return ExecutableTuple(
+    #     [op_s(x, out=out, where=where), op_c(x, out=out, where=where)]
+    # )
