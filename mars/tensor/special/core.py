@@ -14,7 +14,6 @@
 
 
 from ... import opcodes
-from ..arithmetic.utils import arithmetic_operand
 from ..arithmetic.core import TensorUnaryOp, TensorBinOp, TensorMultiOp
 from ..array_utils import (
     np,
