@@ -378,7 +378,6 @@ class TensorUnaryOpMixin(TensorElementWiseWithInputs):
                     ret = cls._execute_gpu(op, xp, inputs[0], **kw)
                 else:
                     ret = cls._execute_cpu(op, xp, inputs[0], **kw)
-
                 ctx[op.outputs[0].key] = _handle_out_dtype(ret, op.dtype)
 
 
