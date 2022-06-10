@@ -154,12 +154,12 @@ class TensorTupleElement(TensorSpecialUnaryOp):
                 inputs, kw["where"] = inputs[:-1], inputs[-1]
 
             with np.errstate(**op.err):
-                _tuple_func_cached = False
+                is_func_ret_cached = False
                 if (
                     cls._func_name in _tuple_func_to_res
                     and input_keys[0] in _tuple_func_to_res[cls._func_name]
                 ):
-                    _tuple_func_cached = True
+                    is_func_ret_cached = True
                     ret = _tuple_func_to_res[cls._func_name][input_keys[0]]
                 elif op.is_gpu():
                     ret = cls._execute_gpu(op, xp, inputs[0], **kw)
@@ -168,7 +168,7 @@ class TensorTupleElement(TensorSpecialUnaryOp):
 
                 # during a single execution, if we use multiple components of the same
                 # scipy calculation, we can store the overall result after the first computation.
-                if not _tuple_func_cached:
+                if not is_func_ret_cached:
                     if cls._func_name not in _tuple_func_to_res:
                         _tuple_func_to_res[cls._func_name] = {}
                     if input_keys[0] not in _tuple_func_to_res[cls._func_name]:
