@@ -44,25 +44,6 @@ def _register_special_op(cls):
     return cls
 
 
-def tuple_element_tensor_generator():
-    output_index = 0
-
-    def inner(func_name, func_outputs):
-        nonlocal output_index
-
-        @_register_special_op
-        @arithmetic_operand(sparse_mode="unary")
-        class TensorTuple(TensorTupleElementOp):
-            _func_name = func_name
-            _func_outputs = func_outputs
-            _output_index = output_index
-
-        output_index += 1
-        return TensorTuple
-
-    return inner
-
-
 class TensorSpecialOperandMixin:
     _op_code_ = opcodes.SPECIAL
     _func_name = None

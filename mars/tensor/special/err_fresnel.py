@@ -17,7 +17,7 @@ import scipy.special as spspecial
 from ...core import ExecutableTuple
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
-from .core import TensorSpecialUnaryOp, TensorTupleElementOp, _register_special_op, tuple_element_tensor_generator
+from .core import TensorSpecialUnaryOp, TensorTupleElementOp, _register_special_op
 
 
 @_register_special_op
@@ -163,17 +163,9 @@ def erfcinv(x, out=None, where=None, **kwargs):
 @implement_scipy(spspecial.fresnel)
 @infer_dtype(spspecial.fresnel, multi_outputs=True)
 def fresnel(x, out=None, where=None, **kwargs):
-    n_outputs = 2
-    generator = tuple_element_tensor_generator()
-    ops = [generator(func_name="fresnel", func_outputs=n_outputs)(**kwargs) for _ in range(n_outputs)]
+    op_s = TensorFresnelS(**kwargs)
+    op_c = TensorFresnelC(**kwargs)
 
-    return ExecutableTuple([op(x, out=out, where=where) for op in ops])
-
-    # op_s = TensorFresnelS(**kwargs)
-    # op_c = TensorFresnelC(**kwargs)
-
-    # print(op_s(x, out=out, where=where))
-
-    # return ExecutableTuple(
-    #     [op_s(x, out=out, where=where), op_c(x, out=out, where=where)]
-    # )
+    return ExecutableTuple(
+        [op_s(x, out=out, where=where), op_c(x, out=out, where=where)]
+    )
