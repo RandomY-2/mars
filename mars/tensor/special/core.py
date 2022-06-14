@@ -30,7 +30,6 @@ from ..array_utils import (
 
 
 _func_name_to_special_cls = {}
-_tuple_func_to_res = {}
 
 
 def _register_special_op(cls):
@@ -127,7 +126,9 @@ class TensorTupleOp(TensorSpecialUnaryOp):
         x = astensor(x)
 
         if out is not None and not isinstance(out, ExecutableTuple):
-            raise TypeError(f"out should be ExecutableTuple object, got {type(out)} instead")
+            raise TypeError(
+                f"out should be ExecutableTuple object, got {type(out)} instead"
+            )
 
         func = getattr(spspecial, self._func_name)
         res = func(np.ones(x.shape, dtype=x.dtype))

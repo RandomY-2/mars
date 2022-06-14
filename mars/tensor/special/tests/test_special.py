@@ -294,6 +294,28 @@ def test_fresnel():
         assert r[i].dtype == expect[i].dtype
         assert isinstance(r[i], TensorFresnel)
 
+    non_tuple_out = tensor(raw, chunk_size=3)
+    with pytest.raises(TypeError):
+        r = fresnel(t, non_tuple_out)
+
+    out = ExecutableTuple([t, t])
+    r_out = fresnel(t, out=out)
+
+    assert isinstance(out, ExecutableTuple)
+    assert isinstance(r_out, ExecutableTuple)
+
+    assert len(out) == 2
+    assert len(r_out) == 2
+
+    for i in range(len(r_out)):
+        assert r_out[i].shape == expect[i].shape
+        assert r_out[i].dtype == expect[i].dtype
+        assert isinstance(r_out[i], TensorFresnel)
+
+        assert out[i].shape == expect[i].shape
+        assert out[i].dtype == expect[i].dtype
+        assert isinstance(out[i], TensorFresnel)
+
 
 def test_beta_inc():
     raw1 = np.random.rand(4, 3, 2)

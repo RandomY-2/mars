@@ -14,12 +14,10 @@
 
 import scipy.special as spspecial
 
-# from ...core import ExecutableTuple
 from ..arithmetic.utils import arithmetic_operand
 from ..utils import infer_dtype, implement_scipy
 from .core import (
     TensorSpecialUnaryOp,
-    # TensorTupleElementOp,
     TensorTupleOp,
     _register_special_op,
 )
