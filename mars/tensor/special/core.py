@@ -144,10 +144,8 @@ class TensorTupleOp(TensorSpecialUnaryOp):
             ],
         )
 
-        res_tuple = ExecutableTuple(res_tensors)
-
         if out is None:
-            return res_tuple
+            return ExecutableTuple(res_tensors)
 
         for i in range(len(res_tensors)):
             out[i].data = res_tensors[i].data
