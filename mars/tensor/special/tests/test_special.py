@@ -49,8 +49,7 @@ from ..err_fresnel import (
     erfcinv,
     TensorErfcinv,
     fresnel,
-    TensorFresnelS,
-    TensorFresnelC,
+    TensorFresnel,
 )
 from ..gamma_funcs import (
     gammaln,
@@ -293,11 +292,7 @@ def test_fresnel():
     for i in range(len(r)):
         assert r[i].shape == expect[i].shape
         assert r[i].dtype == expect[i].dtype
-
-        if i == 0:
-            assert isinstance(r[i].op, TensorFresnelS)
-        if i == 1:
-            assert isinstance(r[i].op, TensorFresnelC)
+        assert isinstance(r[i], TensorFresnel)
 
 
 def test_beta_inc():
