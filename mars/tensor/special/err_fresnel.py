@@ -79,6 +79,12 @@ class TensorFresnel(TensorTupleOp):
 
 
 @_register_special_op
+class TensorFresnelZeros(TensorTupleOp):
+    _func_name = "fresnel_zeros"
+    _n_outputs = 2
+
+
+@_register_special_op
 class TensorModFresnelP(TensorTupleOp):
     _func_name = "modfresnelp"
     _n_outputs = 2
@@ -201,6 +207,13 @@ def dawsn(x, out=None, where=None, **kwargs):
 @infer_dtype(spspecial.fresnel, multi_outputs=True)
 def fresnel(x, out=None, **kwargs):
     op = TensorFresnel(**kwargs)
+    return op(x, out=out)
+
+
+@implement_scipy(spspecial.fresnel_zeros)
+@infer_dtype(spspecial.fresnel_zeros, multi_outputs=True)
+def fresnel_zeros(x, out=None, **kwargs):
+    op = TensorFresnelZeros(**kwargs)
     return op(x, out=out)
 
 

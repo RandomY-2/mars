@@ -51,6 +51,7 @@ Error functions and fresnel integrals
    mars.tensor.special.wofz
    mars.tensor.special.dawsn
    mars.tensor.special.fresnel
+   mars.tensor.special.fresnel_zeros
    mars.tensor.special.modfresnelp
    mars.tensor.special.modfresnelm
 
