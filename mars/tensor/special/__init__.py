@@ -34,8 +34,6 @@ try:
         TensorDawsn,
         fresnel,
         TensorFresnel,
-        fresnel_zeros,
-        TensorFresnelZeros,
         modfresnelp,
         TensorModFresnelP,
         modfresnelm,
