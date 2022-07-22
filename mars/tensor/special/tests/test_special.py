@@ -135,14 +135,14 @@ def test_unary_operand_out(func, tensor_cls):
 
 
 @pytest.mark.parametrize(
-    "func,tensor_cls",
+    "func,tensor_cls,n_outputs,has_out_tuple",
     [
-        ("fresnel", TensorFresnel),
-        ("modfresnelp", TensorModFresnelP),
-        ("modfresnelm", TensorModFresnelM),
+        ("fresnel", TensorFresnel, 2, True),
+        ("modfresnelp", TensorModFresnelP, 2, True),
+        ("modfresnelm", TensorModFresnelM, 2, True),
     ],
 )
-def test_unary_tuple_operand(func, tensor_cls):
+def test_unary_tuple_operand(func, tensor_cls, n_outputs, has_out_tuple):
     sp_func = getattr(spsecial, func)
     mt_func = getattr(mt_special, func)
 
@@ -167,7 +167,10 @@ def test_unary_tuple_operand(func, tensor_cls):
     with pytest.raises(TypeError):
         r = mt_func(t, mismatch_size_tuple)
 
-    out = ExecutableTuple([t, t])
+    if not has_out_tuple:
+        return
+
+    out = ExecutableTuple([t] * n_outputs)
     r_out = mt_func(t, out=out)
 
     assert isinstance(out, ExecutableTuple)
